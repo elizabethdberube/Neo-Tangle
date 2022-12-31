@@ -14,13 +14,13 @@ Will there be snacks? I see no snacks.
 
 
 # setup 
-run:
+### run:
 npm i
 
 # start
-run:
+### run:
 npm start
-in your browser go to:
+### in your browser go to:
 localhost:8080
 
 # app we are using 
