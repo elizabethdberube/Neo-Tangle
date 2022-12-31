@@ -47,19 +47,38 @@ export default class MainScene extends Phaser.Scene {
     //BACKGROUND
     //this.add.image(0, 0, "mainroom").setOrigin(0);
     const map = this.map = this.make.tilemap({ key: "map", tileWidth: 32, tileHeight: 32 });
+
+    var showCollidingTiles=false;
+    var showTiles = false;
+    var showFaces = false;
+    var tileColor = showTiles ? new Phaser.Display.Color(105, 210, 231, 200) : null;
+    var colldingTileColor = showCollidingTiles ? new Phaser.Display.Color(243, 134, 48, 200) : null;
+    var faceColor = showFaces ? new Phaser.Display.Color(40, 39, 37, 255) : null;
+
+
+
     const tileset = map.addTilesetImage("tile", 'tiles');
     const layer = map.createStaticLayer(0, tileset, 0, 0);
-    layer.setScale(1);
     this.blockedLayer = map.createStaticLayer(1, tileset, 0, 0);
+
     this.blockedLayer.setScale(1);
+    layer.setScale(1);
 
     layer.setCollisionByProperty({ collides: true });
     this.blockedLayer.setCollisionByProperty({ collides: true });
+
+
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+    var debugGraphics = this.add.graphics();
 
+    // Pass in null for any of the style options to disable drawing that component
+    map.renderDebug(debugGraphics, {
+        tileColor: tileColor,                   // Non-colliding tiles
+        collidingTileColor: colldingTileColor,  // Colliding tiles
+        faceColor: faceColor                    // Interesting faces, i.e. colliding edges
+    });
  
-    window.x = this;
 
 
     //CREATE SOCKET
@@ -240,23 +259,25 @@ export default class MainScene extends Phaser.Scene {
 
   buildPlayerObject(scene, playerInfo) {
 
-    var new_player = scene.physics.add
-      .sprite(0, 0, "astronaut")
-      .setOrigin(0.5, 0.5)
-      .setSize(30, 40)
-      .setOffset(0, 24)
-      .setScale(0.5);
+    var new_player = scene.add
+      .sprite(0, 0 , "astronaut");
+    new_player.setScale(1.0);
 
     var style = { font: "10px Arial", fill: "#ffffff" };  
-    var label = scene.add.text(0,-15 , playerInfo.label || "mooo", style);
+    var label = scene.add.text(0  , -15 , playerInfo.label || "mooo", style);
     label.setOrigin(0.5, 0.5)
+
+    console.log(label.displayHeight);
+    console.log(new_player.displayHeight);
 
     var new_container = scene.add.container(playerInfo.x, playerInfo.y, [label, new_player])
     new_player.container = new_container;
-
-    scene.physics.world.enable(new_container);
+    new_container.setScale(1.0);
+    console.log(new_container.displayHeight);
 
     new_container.sprite = new_player;
+    scene.physics.world.enable(new_container);
+    new_container.body.setSize(16,16);
 
     return(  new_container );
   }
@@ -269,11 +290,12 @@ export default class MainScene extends Phaser.Scene {
     this.player = new_container;
     this.astronaut = new_container;
 
-    scene.physics.add.collider(this.player, this.blockedLayer);
-    //the camera will follow the player in the world
+     scene.physics.add.collider(this.player, this.blockedLayer);
+
+     // the camera will follow the player in the world
      this.cameras.main.setRoundPixels(true);
-    this.cameras.main.startFollow(this.player, true, 1, 1);
-    this.cameras.main.setBounds(0, 0,  this.map.widthInPixels, this.map.heightInPixels);
+     this.cameras.main.startFollow(this.player, true, 1, 1);
+     this.cameras.main.setBounds(0, 0,  this.map.widthInPixels, this.map.heightInPixels);
 
 
 
