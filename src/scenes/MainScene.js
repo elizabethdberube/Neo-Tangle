@@ -165,10 +165,10 @@ export default class MainScene extends Phaser.Scene {
         }
       });
     });
-    this.createPlayerAnimation(Direction.UP, 8, 11);
-    this.createPlayerAnimation(Direction.RIGHT, 4, 7);
-    this.createPlayerAnimation(Direction.DOWN, 0, 3);
-    this.createPlayerAnimation(Direction.LEFT, 12, 15);
+    this.createPlayerAnimation(Direction.UP, 13, 19);
+    this.createPlayerAnimation(Direction.RIGHT, 13, 19);
+    this.createPlayerAnimation(Direction.DOWN, 13, 19);
+    this.createPlayerAnimation(Direction.LEFT, 13, 19);
   }
 
   update() {
