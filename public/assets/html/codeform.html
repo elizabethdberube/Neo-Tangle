@@ -12,12 +12,18 @@
 <h1> Pick your sprite: </h1>
 
 <div class="catSprite">
-<img src="./assets/kitty-cat/gato-1.png" class="kittyCat" id="kittyCatOne" alt="it's a kitty">
+    
+<img src="./assets/kitty-cat/gato-1.png" class="kittyCat" id="kittyCatOne" alt="it's a kitty" onClick="getCat();">
 
-<img src="./assets/kitty-cat/gato-2.png" class="kittyCat" id="kittyCatTwo" alt="it's another kitty">
 
-<img src="./assets/kitty-cat/gato-3.png" class="kittyCat" id="kittyCatThree" alt="it's a third kitty">
+<img src="./assets/kitty-cat/gato-2.png" class="kittyCat" id="kittyCatTwo" alt="it's another kitty" onClick="getCat();">
+
+
+<img src="./assets/kitty-cat/gato-3.png" class="kittyCat" id="kittyCatThree" alt="it's a third kitty" onClick="getCat();">
+<input type="hidden" value="catAvatar" id="kittyInput" class="kittyImg" />
+
 </div>
+
 
 </div>
 <div>
@@ -31,3 +37,10 @@
 
 
 
+<script>
+    let getCat = () => {
+        document.getElementById('kittyInput').value = 'kittCatOne';
+        document.getElementById('kittyInput').value = 'kittCatTwo';
+        document.getElementById('kittyInput').value = 'kittCatThree';
+    }
+</script>
