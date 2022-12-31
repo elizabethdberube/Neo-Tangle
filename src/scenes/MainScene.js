@@ -42,13 +42,24 @@ export default class MainScene extends Phaser.Scene {
     }
 
   create() {
+
     const scene = this;
     //BACKGROUND
     //this.add.image(0, 0, "mainroom").setOrigin(0);
-    const map = this.make.tilemap({ key: "map", tileWidth: 32, tileHeight: 32 });
+    const map = this.map = this.make.tilemap({ key: "map", tileWidth: 32, tileHeight: 32 });
     const tileset = map.addTilesetImage("tile", 'tiles');
     const layer = map.createStaticLayer(0, tileset, 0, 0);
-    const layer2 = map.createStaticLayer(1, tileset, 0, 0);
+    layer.setScale(1);
+    this.blockedLayer = map.createStaticLayer(1, tileset, 0, 0);
+    this.blockedLayer.setScale(1);
+
+    layer.setCollisionByProperty({ collides: true });
+    this.blockedLayer.setCollisionByProperty({ collides: true });
+    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+
+ 
+    window.x = this;
 
 
     //CREATE SOCKET
@@ -64,6 +75,7 @@ export default class MainScene extends Phaser.Scene {
     this.socket.on("setState", function (state) {
       const { roomKey, players, numPlayers } = state;
       scene.physics.resume();
+
 
       // STATE
       scene.state.roomKey = roomKey;
@@ -229,20 +241,21 @@ export default class MainScene extends Phaser.Scene {
   buildPlayerObject(scene, playerInfo) {
 
     var new_player = scene.physics.add
-      .sprite(playerInfo.x, playerInfo.y, "astronaut")
+      .sprite(0, 0, "astronaut")
       .setOrigin(0.5, 0.5)
       .setSize(30, 40)
       .setOffset(0, 24)
       .setScale(0.5);
 
     var style = { font: "10px Arial", fill: "#ffffff" };  
-    var label = scene.add.text(playerInfo.x - 0,playerInfo.y - 35 , playerInfo.label || "mooo", style);
+    var label = scene.add.text(0,-15 , playerInfo.label || "mooo", style);
     label.setOrigin(0.5, 0.5)
 
-    var new_container = scene.add.container(0, 0, [label, new_player])
+    var new_container = scene.add.container(playerInfo.x, playerInfo.y, [label, new_player])
     new_player.container = new_container;
 
     scene.physics.world.enable(new_container);
+
     new_container.sprite = new_player;
 
     return(  new_container );
@@ -253,7 +266,15 @@ export default class MainScene extends Phaser.Scene {
 
     var new_container = this.buildPlayerObject(scene, playerInfo);
 
+    this.player = new_container;
     this.astronaut = new_container;
+
+    scene.physics.add.collider(this.player, this.blockedLayer);
+    //the camera will follow the player in the world
+     this.cameras.main.setRoundPixels(true);
+    this.cameras.main.startFollow(this.player, true, 1, 1);
+    this.cameras.main.setBounds(0, 0,  this.map.widthInPixels, this.map.heightInPixels);
+
 
 
   }
