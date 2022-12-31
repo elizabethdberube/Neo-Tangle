@@ -11,8 +11,8 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet("astronaut", "assets/spritesheets/001.png", {
-      frameWidth: 16,
-      frameHeight: 21
+      frameWidth: 21,
+      frameHeight: 16
     });
 
 
@@ -165,10 +165,11 @@ export default class MainScene extends Phaser.Scene {
         }
       });
     });
-    this.createPlayerAnimation(Direction.UP, 13, 19);
-    this.createPlayerAnimation(Direction.RIGHT, 13, 19);
-    this.createPlayerAnimation(Direction.DOWN, 13, 19);
-    this.createPlayerAnimation(Direction.LEFT, 13, 19);
+    this.createPlayerAnimation(Direction.UP, 12, 18);
+    this.createPlayerAnimation(Direction.RIGHT, 12, 18);
+    this.createPlayerAnimation(Direction.DOWN, 12, 18);
+    this.createPlayerAnimation(Direction.LEFT, 12, 18
+      );
   }
 
   update() {
@@ -277,7 +278,7 @@ export default class MainScene extends Phaser.Scene {
 
     new_container.sprite = new_player;
     scene.physics.world.enable(new_container);
-    new_container.body.setSize(16,16);
+    new_container.body.setSize(21,16);
 
     return(  new_container );
   }
