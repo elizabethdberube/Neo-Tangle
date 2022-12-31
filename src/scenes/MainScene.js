@@ -11,8 +11,8 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet("astronaut", "assets/spritesheets/001.png", {
-      frameWidth: 32,
-      frameHeight: 32
+      frameWidth: 21,
+      frameHeight: 16
     });
 
 
