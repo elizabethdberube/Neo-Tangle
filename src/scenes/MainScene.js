@@ -11,14 +11,14 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet("astronaut", "assets/spritesheets/001.png", {
-      frameWidth: 64,
-      frameHeight: 128
+      frameWidth: 32,
+      frameHeight: 32
     });
 
 
-    this.load.tilemapTiledJSON("map", "/assets/tilemaps/level.json");
+    this.load.tilemapTiledJSON("map", "/assets/tilemaps/map.json");
 
-    this.load.image('tiles', 'assets/tilesets/kenney-tileset-64px-extruded.png');
+    this.load.image('tiles', 'assets/tilesets/tiles.png');
     this.load.image("vendingMachine", "assets/sprites/vendingMachine.png");
     this.load.image("mainroom", "assets/backgrounds/mainroom.png");
   }
@@ -45,9 +45,10 @@ export default class MainScene extends Phaser.Scene {
     const scene = this;
     //BACKGROUND
     //this.add.image(0, 0, "mainroom").setOrigin(0);
-    const map = this.make.tilemap({ key: "map", tileWidth: 48, tileHeight: 48 });
-    const tileset = map.addTilesetImage("kenney-tileset-64px-extruded", 'tiles');
+    const map = this.make.tilemap({ key: "map", tileWidth: 32, tileHeight: 32 });
+    const tileset = map.addTilesetImage("tile", 'tiles');
     const layer = map.createStaticLayer(0, tileset, 0, 0);
+    const layer2 = map.createStaticLayer(1, tileset, 0, 0);
 
 
     //CREATE SOCKET

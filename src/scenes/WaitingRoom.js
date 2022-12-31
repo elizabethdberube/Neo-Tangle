@@ -12,7 +12,7 @@ export default class WaitingRoom extends Phaser.Scene {
   }
 
   preload() {
-    this.load.html("codeform", "assets/text/codeform.html");
+    this.load.html("codeform", "assets/html/codeform.html");
   }
 
   create() {
