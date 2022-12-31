@@ -16,7 +16,7 @@ But this hasn't happened yet!
 import "phaser";
 import config from "./config/config";
 import WaitingRoom from "./scenes/WaitingRoom";
-import MainScene from "./scenes/MainScene";
+import MainScene from "./scenes/MainScene.js";
 import TaskScene from "./scenes/TaskScene";
 
 class Game extends Phaser.Game {
@@ -33,6 +33,7 @@ class Game extends Phaser.Game {
     this.scene.start("MainScene");
   }
 }
+
 // Create new instance of game
 window.onload = function () {
   window.game = new Game();

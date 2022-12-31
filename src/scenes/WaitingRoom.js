@@ -18,77 +18,54 @@ export default class WaitingRoom extends Phaser.Scene {
   create() {
     const scene = this;
 
+    scene.input.keyboard.clearCaptures(); // so we can use spacebar
     scene.popUp = scene.add.graphics();
     scene.boxes = scene.add.graphics();
 
     // for popup window
     scene.popUp.lineStyle(1, 0xffffff);
-    scene.popUp.fillStyle(0xffffff, 0.5);
+    scene.popUp.fillStyle(0x72bcd4,0.5);
 
     // for boxes
     scene.boxes.lineStyle(1, 0xffffff);
-    scene.boxes.fillStyle(0xa9a9a9, 1);
+    scene.boxes.fillStyle(0x72bcd4, 0.9);
 
     // popup window
     scene.popUp.strokeRect(25, 25, 750, 500);
     scene.popUp.fillRect(25, 25, 750, 500);
 
+    scene.boxes.fillRect(25, 26, 749, 110);
+
     //title
-    scene.title = scene.add.text(100, 75, "RegEx Spaceship", {
-      fill: "#add8e6",
+    scene.title = scene.add.text(100, 30, "Moop Moop Troop", {
+      fill: "#e6bbad",
       fontSize: "66px",
       fontStyle: "bold",
     });
-
-    //left popup
-    scene.boxes.strokeRect(100, 200, 275, 100);
-    scene.boxes.fillRect(100, 200, 275, 100);
-    scene.requestButton = scene.add.text(140, 215, "Request Room Key", {
-      fill: "#000000",
+    scene.title = scene.add.text((750)/2, 110, "Sic Transit Gloria Compos Mentis", {
+      fill: "#e6bbad",
       fontSize: "20px",
       fontStyle: "bold",
-    });
+    }).setOrigin(0.5);
+
+
+
 
     //right popup
-    scene.boxes.strokeRect(425, 200, 275, 100);
-    scene.boxes.fillRect(425, 200, 275, 100);
-    scene.inputElement = scene.add.dom(562.5, 250).createFromCache("codeform");
+    scene.boxes.fillStyle(0x5fb2ce, 0.6);
+    scene.boxes.fillRect(50, 200, 700, 100);
+    scene.inputElement = scene.add.dom(200, 250).createFromCache("codeform");
     scene.inputElement.addListener("click");
     scene.inputElement.on("click", function (event) {
       if (event.target.name === "enterRoom") {
-        const input = scene.inputElement.getChildByName("code-form");
 
-        scene.socket.emit("isKeyValid", input.value);
+console.log(scene.inputElement);
+	scene.socket.emit("joinRoom", 'snorktown', {label: scene.inputElement.getChildByName('name-form').value });
+	scene.scene.stop("WaitingRoom");
       }
     });
 
-    scene.requestButton.setInteractive();
-    scene.requestButton.on("pointerdown", () => {
-      scene.socket.emit("getRoomCode");
-    });
 
-    scene.notValidText = scene.add.text(670, 295, "", {
-      fill: "#ff0000",
-      fontSize: "15px",
-    });
-    scene.roomKeyText = scene.add.text(210, 250, "", {
-      fill: "#00ff00",
-      fontSize: "20px",
-      fontStyle: "bold",
-    });
-
-    scene.socket.on("roomCreated", function (roomKey) {
-      scene.roomKey = roomKey;
-      scene.roomKeyText.setText(scene.roomKey);
-    });
-
-    scene.socket.on("keyNotValid", function () {
-      scene.notValidText.setText("Invalid Room Key");
-    });
-    scene.socket.on("keyIsValid", function (input) {
-      scene.socket.emit("joinRoom", input);
-      scene.scene.stop("WaitingRoom");
-    });
   }
   update() {}
 }

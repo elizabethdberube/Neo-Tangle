@@ -1,4 +1,9 @@
-# amongus-tutorial
+# Neo T.A.N.G.L.E
 
-This is the source code the three part tutorial: Build an Among Us Inspired Live Multiplayer Game with Phaser 3 and Socket.io
-https://medium.com/hannahrobot/build-an-among-us-inspired-live-multiplayer-game-with-phaser-3-and-socket-io-part-1-71749d70b7b4
+Are you a human?
+
+Do you, like a human, like to do the things?
+
+Well, this is a thing.
+
+It is game.

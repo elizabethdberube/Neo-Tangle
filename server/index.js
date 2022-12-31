@@ -24,7 +24,7 @@ const createApp = () => {
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
-      const err = new Error("Not found");
+      const err = new Error(req.path + " Not found");
       err.status = 404;
       next(err);
     } else {

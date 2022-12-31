@@ -14,7 +14,16 @@ module.exports = (io) => {
     console.log(
       `A socket connection to the server has been made: ${socket.id}`
     );
-    socket.on("joinRoom", (roomKey) => {
+    socket.on("joinRoom", (roomKey, obj) => {
+ 
+      if(!gameRooms[roomKey]){
+
+      gameRooms[roomKey] = {
+        roomKey: roomKey,
+        players: {},
+        numPlayers: 0,
+      };
+}
       socket.join(roomKey);
       const roomInfo = gameRooms[roomKey];
       console.log("roomInfo", roomInfo);
@@ -23,6 +32,7 @@ module.exports = (io) => {
         x: 400,
         y: 300,
         playerId: socket.id,
+	label: obj.label
       };
 
       // update number of players
