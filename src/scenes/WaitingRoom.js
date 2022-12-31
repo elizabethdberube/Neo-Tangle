@@ -57,11 +57,10 @@ export default class WaitingRoom extends Phaser.Scene {
     scene.inputElement = scene.add.dom(200, 250).createFromCache("codeform");
     scene.inputElement.addListener("click");
     scene.inputElement.on("click", function (event) {
-      if (event.target.name === "enterRoom") {
+      if (event.target.name === "join") {
 
-console.log(scene.inputElement);
-	scene.socket.emit("joinRoom", 'snorktown', {label: scene.inputElement.getChildByName('name-form').value });
-	scene.scene.stop("WaitingRoom");
+        scene.socket.emit("joinRoom", 'snorktown', {label: scene.inputElement.getChildByName('name').value });
+        scene.scene.stop("WaitingRoom");
       }
     });
 
