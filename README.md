@@ -2,7 +2,7 @@
 
 Are you a human?
 
-Do you, like a human, like to do the things?
+Do you, like a human, like to do the strange things?
 
 Well, this is a thing.
 
